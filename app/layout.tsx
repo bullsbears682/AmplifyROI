@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter, Cal_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/providers'
 import { Toaster } from 'react-hot-toast'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+// import { Analytics } from '@vercel/analytics/react'
+// import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -12,11 +12,12 @@ const inter = Inter({
   display: 'swap',
 })
 
-const calSans = Cal_Sans({ 
-  subsets: ['latin'],
-  variable: '--font-cal-sans',
-  display: 'swap',
-})
+// Using Inter for all text for now
+// const calSans = Cal_Sans({ 
+//   subsets: ['latin'],
+//   variable: '--font-cal-sans',
+//   display: 'swap',
+// })
 
 export const metadata: Metadata = {
   title: {
@@ -108,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${calSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -224,8 +225,8 @@ export default function RootLayout({
           />
           
           {/* Performance monitoring */}
-          <Analytics />
-          <SpeedInsights />
+          {/* <Analytics /> */}
+                      {/* <SpeedInsights /> */}
         </Providers>
         
         {/* Service worker registration */}
