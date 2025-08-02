@@ -1,0 +1,866 @@
+{
+  "countries": [
+    {
+      "code": "US",
+      "name": "United States",
+      "flag": "🇺🇸",
+      "currency": {
+        "code": "USD",
+        "symbol": "$",
+        "name": "US Dollar",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.21,
+        "federal_tax": 0.21,
+        "state_tax_avg": 0.04,
+        "sales_tax": 0.07,
+        "vat": 0,
+        "capital_gains": 0.20,
+        "payroll_tax": 0.153,
+        "varies_by_state": true
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 500,
+        "currency": "USD"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.024,
+        "gdp_growth_2025": 0.028,
+        "business_ease_rank": 6,
+        "minimum_wage": 7.25
+      }
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "currency": {
+        "code": "GBP",
+        "symbol": "£",
+        "name": "British Pound",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.25,
+        "small_company_rate": 0.19,
+        "vat": 0.20,
+        "capital_gains": 0.20,
+        "payroll_tax": 0.138,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "04-06",
+        "end": "04-05"
+      },
+      "business_registration": {
+        "timeframe": "1-3 days",
+        "average_cost": 12,
+        "currency": "GBP"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.021,
+        "gdp_growth_2025": 0.019,
+        "business_ease_rank": 8,
+        "minimum_wage": 11.44
+      }
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.298,
+        "federal_corporate": 0.15,
+        "trade_tax": 0.14,
+        "solidarity_surcharge": 0.055,
+        "vat": 0.19,
+        "reduced_vat": 0.07,
+        "capital_gains": 0.264,
+        "payroll_tax": 0.203,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-4 weeks",
+        "average_cost": 800,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.023,
+        "gdp_growth_2025": 0.014,
+        "business_ease_rank": 22,
+        "minimum_wage": 12.41
+      }
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "flag": "🇫🇷",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.25,
+        "reduced_rate_sme": 0.15,
+        "vat": 0.20,
+        "reduced_vat": 0.055,
+        "capital_gains": 0.30,
+        "payroll_tax": 0.45,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 250,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.021,
+        "gdp_growth_2025": 0.013,
+        "business_ease_rank": 32,
+        "minimum_wage": 11.52
+      }
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "flag": "🇨🇦",
+      "currency": {
+        "code": "CAD",
+        "symbol": "C$",
+        "name": "Canadian Dollar",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.265,
+        "federal_tax": 0.15,
+        "provincial_avg": 0.115,
+        "vat": 0.13,
+        "gst": 0.05,
+        "capital_gains": 0.165,
+        "payroll_tax": 0.099,
+        "varies_by_state": true
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-5 days",
+        "average_cost": 350,
+        "currency": "CAD"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.022,
+        "gdp_growth_2025": 0.023,
+        "business_ease_rank": 23,
+        "minimum_wage": 16.77
+      }
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "flag": "🇦🇺",
+      "currency": {
+        "code": "AUD",
+        "symbol": "A$",
+        "name": "Australian Dollar",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.30,
+        "small_business_rate": 0.25,
+        "vat": 0.10,
+        "capital_gains": 0.225,
+        "payroll_tax": 0.095,
+        "varies_by_state": true
+      },
+      "financial_year": {
+        "start": "07-01",
+        "end": "06-30"
+      },
+      "business_registration": {
+        "timeframe": "1-2 days",
+        "average_cost": 600,
+        "currency": "AUD"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.028,
+        "gdp_growth_2025": 0.025,
+        "business_ease_rank": 14,
+        "minimum_wage": 23.23
+      }
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "flag": "🇯🇵",
+      "currency": {
+        "code": "JPY",
+        "symbol": "¥",
+        "name": "Japanese Yen",
+        "decimal_places": 0
+      },
+      "tax_rates": {
+        "corporate_tax": 0.297,
+        "national_tax": 0.234,
+        "local_tax": 0.063,
+        "vat": 0.10,
+        "capital_gains": 0.20,
+        "payroll_tax": 0.154,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "04-01",
+        "end": "03-31"
+      },
+      "business_registration": {
+        "timeframe": "2-3 weeks",
+        "average_cost": 150000,
+        "currency": "JPY"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.018,
+        "gdp_growth_2025": 0.012,
+        "business_ease_rank": 29,
+        "minimum_wage": 964
+      }
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "flag": "🇸🇬",
+      "currency": {
+        "code": "SGD",
+        "symbol": "S$",
+        "name": "Singapore Dollar",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.17,
+        "vat": 0.09,
+        "capital_gains": 0,
+        "payroll_tax": 0.20,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 days",
+        "average_cost": 300,
+        "currency": "SGD"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.025,
+        "gdp_growth_2025": 0.032,
+        "business_ease_rank": 2,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "flag": "🇳🇱",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.258,
+        "reduced_rate": 0.15,
+        "vat": 0.21,
+        "reduced_vat": 0.09,
+        "capital_gains": 0.31,
+        "payroll_tax": 0.28,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 400,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.022,
+        "gdp_growth_2025": 0.021,
+        "business_ease_rank": 42,
+        "minimum_wage": 12.83
+      }
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "flag": "🇨🇭",
+      "currency": {
+        "code": "CHF",
+        "symbol": "CHF",
+        "name": "Swiss Franc",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.149,
+        "federal_tax": 0.077,
+        "cantonal_avg": 0.072,
+        "vat": 0.081,
+        "capital_gains": 0,
+        "payroll_tax": 0.112,
+        "varies_by_state": true
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-3 weeks",
+        "average_cost": 1200,
+        "currency": "CHF"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.012,
+        "gdp_growth_2025": 0.018,
+        "business_ease_rank": 36,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "flag": "🇸🇪",
+      "currency": {
+        "code": "SEK",
+        "symbol": "kr",
+        "name": "Swedish Krona",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.206,
+        "vat": 0.25,
+        "reduced_vat": 0.12,
+        "capital_gains": 0.30,
+        "payroll_tax": 0.314,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 500,
+        "currency": "SEK"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.020,
+        "gdp_growth_2025": 0.021,
+        "business_ease_rank": 10,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "flag": "🇳🇴",
+      "currency": {
+        "code": "NOK",
+        "symbol": "kr",
+        "name": "Norwegian Krone",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.22,
+        "vat": 0.25,
+        "reduced_vat": 0.15,
+        "capital_gains": 0.22,
+        "payroll_tax": 0.141,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 1000,
+        "currency": "NOK"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.031,
+        "gdp_growth_2025": 0.019,
+        "business_ease_rank": 9,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "flag": "🇩🇰",
+      "currency": {
+        "code": "DKK",
+        "symbol": "kr",
+        "name": "Danish Krone",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.22,
+        "vat": 0.25,
+        "capital_gains": 0.27,
+        "payroll_tax": 0.08,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 days",
+        "average_cost": 700,
+        "currency": "DKK"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.018,
+        "gdp_growth_2025": 0.020,
+        "business_ease_rank": 4,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "NZ",
+      "name": "New Zealand",
+      "flag": "🇳🇿",
+      "currency": {
+        "code": "NZD",
+        "symbol": "NZ$",
+        "name": "New Zealand Dollar",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.28,
+        "vat": 0.15,
+        "capital_gains": 0,
+        "payroll_tax": 0,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "04-01",
+        "end": "03-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 days",
+        "average_cost": 150,
+        "currency": "NZD"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.023,
+        "gdp_growth_2025": 0.024,
+        "business_ease_rank": 1,
+        "minimum_wage": 23.15
+      }
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "flag": "🇮🇪",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.125,
+        "vat": 0.23,
+        "reduced_vat": 0.135,
+        "capital_gains": 0.33,
+        "payroll_tax": 0.1105,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 100,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.024,
+        "gdp_growth_2025": 0.041,
+        "business_ease_rank": 24,
+        "minimum_wage": 12.70
+      }
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "flag": "🇫🇮",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.20,
+        "vat": 0.24,
+        "reduced_vat": 0.14,
+        "capital_gains": 0.30,
+        "payroll_tax": 0.252,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 380,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.020,
+        "gdp_growth_2025": 0.018,
+        "business_ease_rank": 20,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "flag": "🇧🇪",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.25,
+        "reduced_rate": 0.20,
+        "vat": 0.21,
+        "reduced_vat": 0.06,
+        "capital_gains": 0,
+        "payroll_tax": 0.35,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-4 weeks",
+        "average_cost": 1500,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.021,
+        "gdp_growth_2025": 0.015,
+        "business_ease_rank": 45,
+        "minimum_wage": 11.40
+      }
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "flag": "🇦🇹",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.23,
+        "vat": 0.20,
+        "reduced_vat": 0.10,
+        "capital_gains": 0.275,
+        "payroll_tax": 0.228,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-3 weeks",
+        "average_cost": 600,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.022,
+        "gdp_growth_2025": 0.016,
+        "business_ease_rank": 26,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "flag": "🇮🇹",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.278,
+        "ires": 0.24,
+        "irap": 0.038,
+        "vat": 0.22,
+        "reduced_vat": 0.10,
+        "capital_gains": 0.26,
+        "payroll_tax": 0.33,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-6 weeks",
+        "average_cost": 2000,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.019,
+        "gdp_growth_2025": 0.009,
+        "business_ease_rank": 58,
+        "minimum_wage": 0
+      }
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "flag": "🇪🇸",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "Euro",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.25,
+        "reduced_rate": 0.15,
+        "vat": 0.21,
+        "reduced_vat": 0.10,
+        "capital_gains": 0.23,
+        "payroll_tax": 0.299,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-4 weeks",
+        "average_cost": 800,
+        "currency": "EUR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.023,
+        "gdp_growth_2025": 0.021,
+        "business_ease_rank": 30,
+        "minimum_wage": 10.50
+      }
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "flag": "🇧🇷",
+      "currency": {
+        "code": "BRL",
+        "symbol": "R$",
+        "name": "Brazilian Real",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.34,
+        "irpj": 0.15,
+        "csll": 0.09,
+        "additional": 0.10,
+        "vat": 0.19,
+        "capital_gains": 0.15,
+        "payroll_tax": 0.30,
+        "varies_by_state": true
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-8 weeks",
+        "average_cost": 2000,
+        "currency": "BRL"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.042,
+        "gdp_growth_2025": 0.026,
+        "business_ease_rank": 124,
+        "minimum_wage": 1412
+      }
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "flag": "🇮🇳",
+      "currency": {
+        "code": "INR",
+        "symbol": "₹",
+        "name": "Indian Rupee",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.30,
+        "new_regime": 0.25,
+        "vat": 0.18,
+        "capital_gains": 0.20,
+        "payroll_tax": 0.12,
+        "varies_by_state": true
+      },
+      "financial_year": {
+        "start": "04-01",
+        "end": "03-31"
+      },
+      "business_registration": {
+        "timeframe": "2-4 weeks",
+        "average_cost": 15000,
+        "currency": "INR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.041,
+        "gdp_growth_2025": 0.068,
+        "business_ease_rank": 63,
+        "minimum_wage": 176
+      }
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "flag": "🇲🇽",
+      "currency": {
+        "code": "MXN",
+        "symbol": "$",
+        "name": "Mexican Peso",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.30,
+        "vat": 0.16,
+        "capital_gains": 0.10,
+        "payroll_tax": 0.25,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "2-6 weeks",
+        "average_cost": 8000,
+        "currency": "MXN"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.038,
+        "gdp_growth_2025": 0.024,
+        "business_ease_rank": 60,
+        "minimum_wage": 248.93
+      }
+    },
+    {
+      "code": "ZA",
+      "name": "South Africa",
+      "flag": "🇿🇦",
+      "currency": {
+        "code": "ZAR",
+        "symbol": "R",
+        "name": "South African Rand",
+        "decimal_places": 2
+      },
+      "tax_rates": {
+        "corporate_tax": 0.27,
+        "vat": 0.15,
+        "capital_gains": 0.224,
+        "payroll_tax": 0.02,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "03-01",
+        "end": "02-28"
+      },
+      "business_registration": {
+        "timeframe": "3-6 weeks",
+        "average_cost": 2500,
+        "currency": "ZAR"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.045,
+        "gdp_growth_2025": 0.018,
+        "business_ease_rank": 84,
+        "minimum_wage": 27.58
+      }
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "flag": "🇰🇷",
+      "currency": {
+        "code": "KRW",
+        "symbol": "₩",
+        "name": "South Korean Won",
+        "decimal_places": 0
+      },
+      "tax_rates": {
+        "corporate_tax": 0.25,
+        "local_tax": 0.025,
+        "vat": 0.10,
+        "capital_gains": 0.22,
+        "payroll_tax": 0.0981,
+        "varies_by_state": false
+      },
+      "financial_year": {
+        "start": "01-01",
+        "end": "12-31"
+      },
+      "business_registration": {
+        "timeframe": "1-2 weeks",
+        "average_cost": 500000,
+        "currency": "KRW"
+      },
+      "economic_indicators": {
+        "inflation_2025": 0.023,
+        "gdp_growth_2025": 0.026,
+        "business_ease_rank": 5,
+        "minimum_wage": 9860
+      }
+    }
+  ]
+}
