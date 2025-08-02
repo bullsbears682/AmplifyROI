@@ -1,0 +1,256 @@
+version: '3.8'
+
+services:
+  # Frontend Development Server
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      - backend
+      - redis
+    networks:
+      - amplifyroi-network
+    command: npm run dev
+
+  # Backend API Server
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - amplifyroi-data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ADMIN_PASSWORD=admin123
+      - SECRET_KEY=dev-secret-key-change-in-production
+      - DATABASE_URL=sqlite:///app/data/amplifyroi.db
+      - REDIS_URL=redis://redis:6379
+      - SMTP_HOST=smtp.mailtrap.io
+      - SMTP_PORT=2525
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
+      - ENVIRONMENT=development
+    depends_on:
+      - redis
+      - database
+    networks:
+      - amplifyroi-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - amplifyroi-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # SQLite Database (using a lightweight container for consistency)
+  database:
+    image: alpine:latest
+    volumes:
+      - amplifyroi-data:/data
+    networks:
+      - amplifyroi-network
+    command: tail -f /dev/null
+
+  # Production Frontend (for testing production builds)
+  frontend-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend-builder
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_APP_URL=http://localhost:3001
+    networks:
+      - amplifyroi-network
+    profiles:
+      - production
+
+  # Full Stack Production (Nginx + Frontend + Backend)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "80:80"
+      - "8080:8000"
+    environment:
+      - ADMIN_PASSWORD=admin123
+      - SECRET_KEY=prod-secret-key-change-me
+      - DATABASE_URL=sqlite:///data/amplifyroi.db
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - amplifyroi-data:/data
+    depends_on:
+      - redis
+    networks:
+      - amplifyroi-network
+    profiles:
+      - production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Testing Services
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=test
+      - CI=true
+    networks:
+      - amplifyroi-network
+    profiles:
+      - testing
+    command: npm run test:all
+
+  # E2E Testing with Cypress
+  cypress:
+    image: cypress/included:12.17.4
+    depends_on:
+      - frontend
+      - backend
+    environment:
+      - CYPRESS_BASE_URL=http://frontend:3000
+      - CYPRESS_API_URL=http://backend:8000
+    volumes:
+      - ./cypress:/cypress
+      - ./cypress.config.js:/cypress.config.js
+    networks:
+      - amplifyroi-network
+    profiles:
+      - testing
+    working_dir: /
+
+  # Performance Testing with k6
+  k6:
+    image: grafana/k6:latest
+    depends_on:
+      - backend
+    volumes:
+      - ./tests/performance:/scripts
+    networks:
+      - amplifyroi-network
+    profiles:
+      - testing
+    command: run /scripts/load-test.js
+
+  # Database Admin (optional SQLite browser)
+  adminer:
+    image: adminer:latest
+    ports:
+      - "8081:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=database
+    networks:
+      - amplifyroi-network
+    profiles:
+      - tools
+
+  # Redis Admin (optional Redis browser)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    ports:
+      - "8082:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    depends_on:
+      - redis
+    networks:
+      - amplifyroi-network
+    profiles:
+      - tools
+
+  # Monitoring with Prometheus (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - amplifyroi-network
+    profiles:
+      - monitoring
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  # Grafana for monitoring dashboards (optional)
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    networks:
+      - amplifyroi-network
+    profiles:
+      - monitoring
+
+volumes:
+  amplifyroi-data:
+    driver: local
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  amplifyroi-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
