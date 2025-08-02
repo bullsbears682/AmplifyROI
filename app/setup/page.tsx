@@ -3,323 +3,451 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Globe, 
-  Building, 
-  Target,
-  CheckCircle,
+import {
+  ChevronRight,
+  ChevronLeft,
+  Globe,
+  Building,
+  Lightbulb,
+  Check,
   Search,
   Filter,
   Star,
-  TrendingUp
+  TrendingUp,
+  Users,
+  Clock,
+  DollarSign,
+  Target,
+  AlertCircle,
+  Zap
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useCalculator } from '@/contexts/calculator-context'
 import { useAnalyticsContext } from '@/contexts/analytics-context'
-import { useI18n } from '@/contexts/i18n-context'
 import { cn } from '@/lib/utils'
 
-interface Country {
-  code: string
-  name: string
-  flag: string
-  currency: string
-  taxRate: number
-  popular?: boolean
-}
-
-interface BusinessType {
-  id: string
-  name: string
-  description: string
-  icon: string
-  category: string
-  scenarioCount: number
-  averageROI: number
-  popular?: boolean
-}
-
-interface Scenario {
-  id: string
-  name: string
-  description: string
-  businessTypeId: string
-  metrics: {
-    revenueRange: string
-    grossMargin: number
-    growthRate: number
-    difficulty: 'Easy' | 'Medium' | 'Hard'
-  }
-  popular?: boolean
-}
-
 const steps = [
-  { id: 'country', title: 'Select Country', icon: Globe },
-  { id: 'business', title: 'Business Type', icon: Building },
-  { id: 'scenario', title: 'Choose Scenario', icon: Target },
+  {
+    id: 'country',
+    title: 'Select Your Country',
+    description: 'Choose your business location for accurate tax calculations',
+    icon: Globe
+  },
+  {
+    id: 'business',
+    title: 'Choose Business Type',
+    description: 'Select the category that best describes your business',
+    icon: Building
+  },
+  {
+    id: 'scenario',
+    title: 'Pick Your Scenario',
+    description: 'Choose a specific scenario that matches your situation',
+    icon: Lightbulb
+  }
 ]
 
-const countries: Country[] = [
-  { code: 'US', name: 'United States', flag: '🇺🇸', currency: 'USD', taxRate: 21, popular: true },
-  { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP', taxRate: 19, popular: true },
-  { code: 'CA', name: 'Canada', flag: '🇨🇦', currency: 'CAD', taxRate: 15, popular: true },
-  { code: 'AU', name: 'Australia', flag: '🇦🇺', currency: 'AUD', taxRate: 25 },
-  { code: 'DE', name: 'Germany', flag: '🇩🇪', currency: 'EUR', taxRate: 29.9 },
-  { code: 'FR', name: 'France', flag: '🇫🇷', currency: 'EUR', taxRate: 28 },
-  { code: 'SG', name: 'Singapore', flag: '🇸🇬', currency: 'SGD', taxRate: 17 },
-  { code: 'NL', name: 'Netherlands', flag: '🇳🇱', currency: 'EUR', taxRate: 25.8 },
+const countries = [
+  {
+    code: 'US',
+    name: 'United States',
+    flag: '🇺🇸',
+    currency: 'USD',
+    corporateTax: 21,
+    popular: true,
+    users: 15234
+  },
+  {
+    code: 'GB',
+    name: 'United Kingdom',
+    flag: '🇬🇧',
+    currency: 'GBP',
+    corporateTax: 25,
+    popular: true,
+    users: 8456
+  },
+  {
+    code: 'CA',
+    name: 'Canada',
+    flag: '🇨🇦',
+    currency: 'CAD',
+    corporateTax: 26.5,
+    popular: true,
+    users: 5678
+  },
+  {
+    code: 'AU',
+    name: 'Australia',
+    flag: '🇦🇺',
+    currency: 'AUD',
+    corporateTax: 30,
+    popular: true,
+    users: 4321
+  },
+  {
+    code: 'DE',
+    name: 'Germany',
+    flag: '🇩🇪',
+    currency: 'EUR',
+    corporateTax: 29.9,
+    popular: true,
+    users: 3987
+  },
+  {
+    code: 'FR',
+    name: 'France',
+    flag: '🇫🇷',
+    currency: 'EUR',
+    corporateTax: 25,
+    users: 2876
+  },
+  {
+    code: 'NL',
+    name: 'Netherlands',
+    flag: '🇳🇱',
+    currency: 'EUR',
+    corporateTax: 25.8,
+    users: 2234
+  },
+  {
+    code: 'SG',
+    name: 'Singapore',
+    flag: '🇸🇬',
+    currency: 'SGD',
+    corporateTax: 17,
+    users: 1987
+  }
 ]
 
-const businessTypes: BusinessType[] = [
+const businessTypes = [
   {
     id: 'saas',
     name: 'SaaS',
-    description: 'Software as a Service platform',
+    description: 'Software as a Service businesses',
     icon: '💻',
-    category: 'Technology',
-    scenarioCount: 7,
-    averageROI: 145,
-    popular: true
+    scenarios: 7,
+    avgROI: 156,
+    difficulty: 'Medium',
+    popular: true,
+    examples: ['Micro SaaS', 'B2B Platform', 'Freemium App']
   },
   {
     id: 'ecommerce',
     name: 'E-commerce',
-    description: 'Online retail business',
+    description: 'Online retail and product sales',
     icon: '🛒',
-    category: 'Retail',
-    scenarioCount: 7,
-    averageROI: 89,
-    popular: true
+    scenarios: 7,
+    avgROI: 134,
+    difficulty: 'Easy',
+    popular: true,
+    examples: ['Dropshipping', 'Private Label', 'Subscription Box']
   },
   {
     id: 'startup',
     name: 'Startup',
-    description: 'Early-stage company',
+    description: 'Early-stage venture businesses',
     icon: '🚀',
-    category: 'Technology',
-    scenarioCount: 7,
-    averageROI: 234,
-    popular: true
+    scenarios: 7,
+    avgROI: 280,
+    difficulty: 'Hard',
+    popular: true,
+    examples: ['MVP Stage', 'Series A', 'Bootstrap']
   },
   {
     id: 'consulting',
     name: 'Consulting',
-    description: 'Professional services',
-    icon: '👔',
-    category: 'Services',
-    scenarioCount: 7,
-    averageROI: 123
+    description: 'Professional services and expertise',
+    icon: '🤝',
+    scenarios: 7,
+    avgROI: 189,
+    difficulty: 'Easy',
+    examples: ['Solo Consultant', 'Boutique Firm', 'Corporate']
   },
   {
     id: 'agency',
     name: 'Agency',
-    description: 'Marketing & creative agency',
+    description: 'Marketing and creative services',
     icon: '🎨',
-    category: 'Services',
-    scenarioCount: 7,
-    averageROI: 98
+    scenarios: 7,
+    avgROI: 145,
+    difficulty: 'Medium',
+    examples: ['Digital Marketing', 'Creative', 'PR Agency']
   },
   {
     id: 'manufacturing',
     name: 'Manufacturing',
     description: 'Physical product manufacturing',
     icon: '🏭',
-    category: 'Manufacturing',
-    scenarioCount: 7,
-    averageROI: 67
+    scenarios: 7,
+    avgROI: 167,
+    difficulty: 'Hard',
+    examples: ['Small Batch', 'Mass Production', 'Custom']
   }
 ]
 
-const scenarios: { [key: string]: Scenario[] } = {
+const scenarios = {
   saas: [
     {
       id: 'saas-micro',
-      name: 'Micro SaaS',
-      description: 'Small niche SaaS tool',
-      businessTypeId: 'saas',
-      metrics: { revenueRange: '$1K-10K MRR', grossMargin: 85, growthRate: 15, difficulty: 'Easy' },
-      popular: true
+      name: 'Micro SaaS Tool',
+      description: 'Small niche SaaS serving specific market needs',
+      difficulty: 'Easy',
+      avgROI: 156,
+      timeToBreakeven: 8,
+      featured: true
     },
     {
       id: 'saas-b2b',
       name: 'B2B SaaS Platform',
-      description: 'Enterprise software solution',
-      businessTypeId: 'saas',
-      metrics: { revenueRange: '$50K-500K MRR', grossMargin: 82, growthRate: 25, difficulty: 'Hard' }
+      description: 'Enterprise software solution with recurring revenue',
+      difficulty: 'Hard',
+      avgROI: 234,
+      timeToBreakeven: 12,
+      featured: true
     },
     {
       id: 'saas-freemium',
       name: 'Freemium SaaS',
-      description: 'Free tier with premium upgrades',
-      businessTypeId: 'saas',
-      metrics: { revenueRange: '$10K-100K MRR', grossMargin: 88, growthRate: 20, difficulty: 'Medium' },
-      popular: true
+      description: 'Free tier with premium upgrade path',
+      difficulty: 'Medium',
+      avgROI: 189,
+      timeToBreakeven: 10,
+      trending: true
     }
   ],
   ecommerce: [
     {
       id: 'ecom-dropship',
       name: 'Dropshipping Store',
-      description: 'No inventory e-commerce',
-      businessTypeId: 'ecommerce',
-      metrics: { revenueRange: '$5K-50K/mo', grossMargin: 25, growthRate: 30, difficulty: 'Easy' },
-      popular: true
+      description: 'No-inventory e-commerce with supplier fulfillment',
+      difficulty: 'Easy',
+      avgROI: 89,
+      timeToBreakeven: 6
     },
     {
-      id: 'ecom-private',
-      name: 'Private Label',
-      description: 'Branded product sales',
-      businessTypeId: 'ecommerce',
-      metrics: { revenueRange: '$20K-200K/mo', grossMargin: 45, growthRate: 20, difficulty: 'Medium' }
+      id: 'ecom-private-label',
+      name: 'Private Label Brand',
+      description: 'Branded products with exclusive manufacturing',
+      difficulty: 'Medium',
+      avgROI: 134,
+      timeToBreakeven: 9,
+      featured: true
+    },
+    {
+      id: 'ecom-subscription',
+      name: 'Subscription Box',
+      description: 'Curated monthly product subscriptions',
+      difficulty: 'Medium',
+      avgROI: 145,
+      timeToBreakeven: 8,
+      trending: true
     }
   ],
   startup: [
     {
       id: 'startup-mvp',
-      name: 'MVP Stage',
-      description: 'Minimum viable product',
-      businessTypeId: 'startup',
-      metrics: { revenueRange: '$0-5K/mo', grossMargin: 70, growthRate: 50, difficulty: 'Medium' },
-      popular: true
+      name: 'MVP Stage Startup',
+      description: 'Early-stage startup validating product-market fit',
+      difficulty: 'Medium',
+      avgROI: 280,
+      timeToBreakeven: 15,
+      featured: true
     },
     {
       id: 'startup-series-a',
-      name: 'Series A',
-      description: 'Post-funding growth',
-      businessTypeId: 'startup',
-      metrics: { revenueRange: '$100K-1M/mo', grossMargin: 65, growthRate: 35, difficulty: 'Hard' }
+      name: 'Series A Startup',
+      description: 'Post-funding startup scaling operations',
+      difficulty: 'Hard',
+      avgROI: 312,
+      timeToBreakeven: 18
+    },
+    {
+      id: 'startup-bootstrap',
+      name: 'Bootstrap Startup',
+      description: 'Self-funded startup with lean operations',
+      difficulty: 'Medium',
+      avgROI: 198,
+      timeToBreakeven: 12,
+      trending: true
     }
   ]
 }
 
 export default function SetupPage() {
   const [currentStep, setCurrentStep] = useState(0)
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null)
-  const [selectedBusinessType, setSelectedBusinessType] = useState<BusinessType | null>(null)
-  const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null)
+  const [selectedCountry, setSelectedCountry] = useState('')
+  const [selectedBusinessType, setSelectedBusinessType] = useState('')
+  const [selectedScenario, setSelectedScenario] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-  const [filterCategory, setFilterCategory] = useState('all')
+  const [isComplete, setIsComplete] = useState(false)
 
   const router = useRouter()
   const { setWizardStep, setSelectedCountry: setContextCountry, setSelectedBusinessType: setContextBusinessType, setSelectedScenario: setContextScenario } = useCalculator()
-  const { trackEvent, trackFormEvent } = useAnalyticsContext()
-  const { t } = useI18n()
+  const { trackEvent } = useAnalyticsContext()
 
   useEffect(() => {
-    trackFormEvent('setup_wizard', 'start', { step: currentStep })
-  }, [trackFormEvent, currentStep])
+    setWizardStep(currentStep)
+  }, [currentStep, setWizardStep])
 
-  const handleNext = () => {
+  const nextStep = () => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1)
-      setWizardStep(currentStep + 1)
-      trackEvent('setup_wizard_next', { step: currentStep + 1 })
-    } else {
-      handleComplete()
+      setCurrentStep(prev => prev + 1)
+      trackEvent('wizard_step_complete', { step: currentStep + 1 })
     }
   }
 
-  const handlePrevious = () => {
+  const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1)
-      setWizardStep(currentStep - 1)
-      trackEvent('setup_wizard_previous', { step: currentStep - 1 })
+      setCurrentStep(prev => prev - 1)
     }
   }
 
-  const handleComplete = () => {
-    if (selectedCountry && selectedBusinessType && selectedScenario) {
-      setContextCountry(selectedCountry.code)
-      setContextBusinessType(selectedBusinessType.id)
-      setContextScenario(selectedScenario.id)
-      
-      trackFormEvent('setup_wizard', 'complete', {
-        country: selectedCountry.code,
-        businessType: selectedBusinessType.id,
-        scenario: selectedScenario.id
-      })
-      
+  const handleCountrySelect = (countryCode: string) => {
+    setSelectedCountry(countryCode)
+    setContextCountry(countryCode)
+    trackEvent('country_select', { country: countryCode })
+  }
+
+  const handleBusinessTypeSelect = (businessTypeId: string) => {
+    setSelectedBusinessType(businessTypeId)
+    setContextBusinessType(businessTypeId)
+    trackEvent('business_type_select', { businessType: businessTypeId })
+  }
+
+  const handleScenarioSelect = (scenarioId: string) => {
+    setSelectedScenario(scenarioId)
+    setContextScenario(scenarioId)
+    trackEvent('scenario_select', { scenario: scenarioId })
+  }
+
+  const completeSetup = () => {
+    setIsComplete(true)
+    trackEvent('wizard_complete', {
+      country: selectedCountry,
+      businessType: selectedBusinessType,
+      scenario: selectedScenario
+    })
+    
+    // Redirect to calculator after animation
+    setTimeout(() => {
       router.push('/calculator')
-    }
+    }, 2000)
   }
 
   const canProceed = () => {
     switch (currentStep) {
-      case 0: return selectedCountry !== null
-      case 1: return selectedBusinessType !== null
-      case 2: return selectedScenario !== null
+      case 0: return selectedCountry !== ''
+      case 1: return selectedBusinessType !== ''
+      case 2: return selectedScenario !== ''
       default: return false
     }
   }
 
-  const filteredBusinessTypes = businessTypes.filter(type => {
-    const matchesSearch = type.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         type.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = filterCategory === 'all' || type.category === filterCategory
-    return matchesSearch && matchesCategory
-  })
+  const filteredCountries = countries.filter(country =>
+    country.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
-  const availableScenarios = selectedBusinessType ? scenarios[selectedBusinessType.id] || [] : []
+  const filteredBusinessTypes = businessTypes.filter(type =>
+    type.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    type.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
-  const categories = Array.from(new Set(businessTypes.map(type => type.category)))
+  const availableScenarios = selectedBusinessType ? scenarios[selectedBusinessType] || [] : []
+
+  if (isComplete) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="text-center"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+          >
+            <Check className="w-12 h-12 text-white" />
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4"
+          >
+            Setup Complete!
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="text-xl text-gray-600 dark:text-gray-400 mb-8"
+          >
+            Taking you to the ROI calculator...
+          </motion.p>
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ delay: 0.8, duration: 1.2 }}
+            className="h-2 bg-primary-600 rounded-full mx-auto max-w-xs"
+          />
+        </motion.div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       <div className="container-padding py-8">
         <div className="max-w-4xl mx-auto">
-          {/* Progress Header */}
-          <div className="mb-12">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                  Setup Your ROI Calculator
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Tell us about your business to get accurate ROI calculations
-                </p>
-              </div>
-              <Badge variant="secondary" className="text-sm">
-                Step {currentStep + 1} of {steps.length}
-              </Badge>
-            </div>
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+              Let's Set Up Your ROI Calculation
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-400">
+              Follow these simple steps to get accurate results for your business
+            </p>
+          </div>
 
-            {/* Progress Steps */}
+          {/* Progress Bar */}
+          <div className="mb-12">
             <div className="flex items-center justify-between">
               {steps.map((step, index) => (
-                <React.Fragment key={step.id}>
+                <div key={step.id} className="flex items-center flex-1">
                   <div className="flex items-center">
                     <div className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300",
-                      index <= currentStep
-                        ? "bg-primary-600 border-primary-600 text-white"
-                        : "bg-gray-100 border-gray-300 text-gray-400 dark:bg-gray-800 dark:border-gray-600"
+                      "w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg transition-all duration-300",
+                      index <= currentStep ? "bg-primary-600" : "bg-gray-300 dark:bg-gray-600"
                     )}>
                       {index < currentStep ? (
-                        <CheckCircle className="w-6 h-6" />
+                        <Check className="w-6 h-6" />
                       ) : (
                         <step.icon className="w-6 h-6" />
                       )}
                     </div>
-                    <div className="ml-3 hidden sm:block">
-                      <div className={cn(
-                        "text-sm font-medium",
+                    <div className="ml-4 hidden sm:block">
+                      <p className={cn(
+                        "font-semibold",
                         index <= currentStep ? "text-gray-900 dark:text-gray-100" : "text-gray-500 dark:text-gray-400"
                       )}>
                         {step.title}
-                      </div>
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {step.description}
+                      </p>
                     </div>
                   </div>
                   {index < steps.length - 1 && (
                     <div className={cn(
                       "flex-1 h-1 mx-4 rounded-full transition-all duration-300",
-                      index < currentStep ? "bg-primary-600" : "bg-gray-200 dark:bg-gray-700"
+                      index < currentStep ? "bg-primary-600" : "bg-gray-300 dark:bg-gray-600"
                     )} />
                   )}
-                </React.Fragment>
+                </div>
               ))}
             </div>
           </div>
@@ -332,167 +460,154 @@ export default function SetupPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="mb-8"
             >
               {/* Step 1: Country Selection */}
               {currentStep === 0 && (
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                    Select Your Country
-                  </h2>
-                  
-                  {/* Popular Countries */}
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
-                      <Star className="w-5 h-5 text-yellow-500 mr-2" />
-                      Popular Countries
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                      {countries.filter(country => country.popular).map((country) => (
-                        <Card
-                          key={country.code}
-                          className={cn(
-                            "cursor-pointer transition-all duration-200 hover:shadow-lg",
-                            selectedCountry?.code === country.code
-                              ? "ring-2 ring-primary-600 bg-primary-50 dark:bg-primary-950"
-                              : "hover:shadow-md"
-                          )}
-                          onClick={() => setSelectedCountry(country)}
-                        >
-                          <CardContent className="p-4">
-                            <div className="flex items-center space-x-3">
-                              <span className="text-2xl">{country.flag}</span>
-                              <div className="flex-1">
-                                <div className="font-semibold text-gray-900 dark:text-gray-100">
-                                  {country.name}
-                                </div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">
-                                  {country.currency} • {country.taxRate}% tax
-                                </div>
-                              </div>
-                              {selectedCountry?.code === country.code && (
-                                <CheckCircle className="w-5 h-5 text-primary-600" />
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                <div className="space-y-6">
+                  <div className="text-center mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                      Select Your Country
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      This helps us provide accurate tax calculations and currency formatting
+                    </p>
                   </div>
 
-                  {/* All Countries */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                      All Countries
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                      {countries.filter(country => !country.popular).map((country) => (
-                        <Card
-                          key={country.code}
-                          className={cn(
-                            "cursor-pointer transition-all duration-200",
-                            selectedCountry?.code === country.code
-                              ? "ring-2 ring-primary-600 bg-primary-50 dark:bg-primary-950"
-                              : "hover:shadow-md"
-                          )}
-                          onClick={() => setSelectedCountry(country)}
-                        >
-                          <CardContent className="p-3">
-                            <div className="flex items-center space-x-2">
-                              <span className="text-lg">{country.flag}</span>
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                  {/* Search */}
+                  <div className="relative mb-6">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      placeholder="Search countries..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-600 focus:border-transparent"
+                    />
+                  </div>
+
+                  {/* Countries Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {filteredCountries.map((country) => (
+                      <Card
+                        key={country.code}
+                        className={cn(
+                          "cursor-pointer transition-all duration-200 hover:shadow-lg",
+                          selectedCountry === country.code
+                            ? "ring-2 ring-primary-600 bg-primary-50 dark:bg-primary-950"
+                            : "hover:bg-gray-50 dark:hover:bg-gray-800"
+                        )}
+                        onClick={() => handleCountrySelect(country.code)}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <span className="text-2xl">{country.flag}</span>
+                              <div>
+                                <h3 className="font-semibold text-gray-900 dark:text-gray-100">
                                   {country.name}
-                                </div>
-                                <div className="text-xs text-gray-500 dark:text-gray-400">
-                                  {country.taxRate}% tax
-                                </div>
+                                </h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                  {country.currency} • {country.corporateTax}% Corp Tax
+                                </p>
                               </div>
                             </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                            <div className="text-right">
+                              {country.popular && (
+                                <Badge variant="secondary" className="mb-1">Popular</Badge>
+                              )}
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                {country.users.toLocaleString()} users
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                 </div>
               )}
 
               {/* Step 2: Business Type Selection */}
               {currentStep === 1 && (
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                    What Type of Business?
-                  </h2>
+                <div className="space-y-6">
+                  <div className="text-center mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                      Choose Your Business Type
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Select the category that best describes your business model
+                    </p>
+                  </div>
 
-                  {/* Search and Filter */}
-                  <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                    <div className="relative flex-1">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                      <input
-                        type="text"
-                        placeholder="Search business types..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-600 focus:border-transparent"
-                      />
-                    </div>
-                    <select
-                      value={filterCategory}
-                      onChange={(e) => setFilterCategory(e.target.value)}
-                      className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-600 focus:border-transparent"
-                    >
-                      <option value="all">All Categories</option>
-                      {categories.map(category => (
-                        <option key={category} value={category}>{category}</option>
-                      ))}
-                    </select>
+                  {/* Search */}
+                  <div className="relative mb-6">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      placeholder="Search business types..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-600 focus:border-transparent"
+                    />
                   </div>
 
                   {/* Business Types Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {filteredBusinessTypes.map((businessType) => (
                       <Card
                         key={businessType.id}
                         className={cn(
-                          "cursor-pointer transition-all duration-200 hover:shadow-lg group",
-                          selectedBusinessType?.id === businessType.id
+                          "cursor-pointer transition-all duration-200 hover:shadow-lg h-full",
+                          selectedBusinessType === businessType.id
                             ? "ring-2 ring-primary-600 bg-primary-50 dark:bg-primary-950"
-                            : "hover:shadow-md"
+                            : "hover:bg-gray-50 dark:hover:bg-gray-800"
                         )}
-                        onClick={() => setSelectedBusinessType(businessType)}
+                        onClick={() => handleBusinessTypeSelect(businessType.id)}
                       >
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start justify-between">
+                        <CardContent className="p-6">
+                          <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center space-x-3">
                               <span className="text-3xl">{businessType.icon}</span>
                               <div>
-                                <CardTitle className="text-lg">{businessType.name}</CardTitle>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">
-                                  {businessType.category}
-                                </div>
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                                  {businessType.name}
+                                </h3>
+                                {businessType.popular && (
+                                  <Badge variant="secondary" className="mt-1">Popular</Badge>
+                                )}
                               </div>
                             </div>
-                            {businessType.popular && (
-                              <Badge variant="secondary" className="text-xs">Popular</Badge>
-                            )}
+                            <Badge 
+                              variant={businessType.difficulty === 'Easy' ? 'success' : 
+                                     businessType.difficulty === 'Medium' ? 'warning' : 'destructive'}
+                            >
+                              {businessType.difficulty}
+                            </Badge>
                           </div>
-                        </CardHeader>
-                        <CardContent className="pt-0">
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                          
+                          <p className="text-gray-600 dark:text-gray-400 mb-4">
                             {businessType.description}
                           </p>
-                          <div className="flex items-center justify-between text-sm">
-                            <div className="flex items-center space-x-1">
-                              <Target className="w-4 h-4 text-primary-600" />
-                              <span className="text-gray-600 dark:text-gray-400">
-                                {businessType.scenarioCount} scenarios
-                              </span>
+                          
+                          <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+                            <div>
+                              <span className="text-gray-500">Scenarios:</span>
+                              <span className="font-semibold ml-1">{businessType.scenarios}</span>
                             </div>
-                            <div className="flex items-center space-x-1">
-                              <TrendingUp className="w-4 h-4 text-green-600" />
-                              <span className="text-green-600 font-medium">
-                                {businessType.averageROI}% avg ROI
-                              </span>
+                            <div>
+                              <span className="text-gray-500">Avg ROI:</span>
+                              <span className="font-semibold text-green-600 ml-1">{businessType.avgROI}%</span>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Examples:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {businessType.examples.map(example => (
+                                <span key={example} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full">
+                                  {example}
+                                </span>
+                              ))}
                             </div>
                           </div>
                         </CardContent>
@@ -504,62 +619,64 @@ export default function SetupPage() {
 
               {/* Step 3: Scenario Selection */}
               {currentStep === 2 && (
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                    Choose Your Scenario
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Select a scenario that best matches your {selectedBusinessType?.name} business
-                  </p>
+                <div className="space-y-6">
+                  <div className="text-center mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                      Pick Your Scenario
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Choose the specific scenario that best matches your business situation
+                    </p>
+                  </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Scenarios Grid */}
+                  <div className="grid grid-cols-1 gap-6">
                     {availableScenarios.map((scenario) => (
                       <Card
                         key={scenario.id}
                         className={cn(
                           "cursor-pointer transition-all duration-200 hover:shadow-lg",
-                          selectedScenario?.id === scenario.id
+                          selectedScenario === scenario.id
                             ? "ring-2 ring-primary-600 bg-primary-50 dark:bg-primary-950"
-                            : "hover:shadow-md"
+                            : "hover:bg-gray-50 dark:hover:bg-gray-800"
                         )}
-                        onClick={() => setSelectedScenario(scenario)}
+                        onClick={() => handleScenarioSelect(scenario.id)}
                       >
-                        <CardHeader>
+                        <CardContent className="p-6">
                           <div className="flex items-start justify-between">
-                            <div>
-                              <CardTitle className="text-lg">{scenario.name}</CardTitle>
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-3">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                                  {scenario.name}
+                                </h3>
+                                <div className="flex items-center space-x-2">
+                                  {scenario.featured && <Badge variant="warning">Featured</Badge>}
+                                  {scenario.trending && <Badge variant="success">Trending</Badge>}
+                                  <Badge 
+                                    variant={scenario.difficulty === 'Easy' ? 'success' : 
+                                           scenario.difficulty === 'Medium' ? 'warning' : 'destructive'}
+                                  >
+                                    {scenario.difficulty}
+                                  </Badge>
+                                </div>
+                              </div>
+                              
+                              <p className="text-gray-600 dark:text-gray-400 mb-4">
                                 {scenario.description}
                               </p>
-                            </div>
-                            {scenario.popular && (
-                              <Badge variant="secondary" className="text-xs">Popular</Badge>
-                            )}
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-3">
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">Revenue Range:</span>
-                              <span className="font-medium">{scenario.metrics.revenueRange}</span>
-                            </div>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">Gross Margin:</span>
-                              <span className="font-medium">{scenario.metrics.grossMargin}%</span>
-                            </div>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">Growth Rate:</span>
-                              <span className="font-medium">{scenario.metrics.growthRate}%</span>
-                            </div>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">Difficulty:</span>
-                              <Badge 
-                                variant={scenario.metrics.difficulty === 'Easy' ? 'success' : 
-                                       scenario.metrics.difficulty === 'Medium' ? 'warning' : 'destructive'}
-                                className="text-xs"
-                              >
-                                {scenario.metrics.difficulty}
-                              </Badge>
+                              
+                              <div className="grid grid-cols-2 gap-6 text-sm">
+                                <div className="flex items-center space-x-2">
+                                  <TrendingUp className="w-4 h-4 text-green-600" />
+                                  <span className="text-gray-500">Average ROI:</span>
+                                  <span className="font-semibold text-green-600">{scenario.avgROI}%</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Clock className="w-4 h-4 text-blue-600" />
+                                  <span className="text-gray-500">Breakeven:</span>
+                                  <span className="font-semibold">{scenario.timeToBreakeven} months</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </CardContent>
@@ -572,10 +689,10 @@ export default function SetupPage() {
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-12">
             <Button
               variant="outline"
-              onClick={handlePrevious}
+              onClick={prevStep}
               disabled={currentStep === 0}
               className="flex items-center space-x-2"
             >
@@ -583,26 +700,37 @@ export default function SetupPage() {
               <span>Previous</span>
             </Button>
 
-            <div className="flex space-x-2">
+            <div className="flex items-center space-x-2">
               {steps.map((_, index) => (
                 <div
                   key={index}
                   className={cn(
                     "w-2 h-2 rounded-full transition-all duration-300",
-                    index === currentStep ? "bg-primary-600 w-8" : "bg-gray-300 dark:bg-gray-600"
+                    index <= currentStep ? "bg-primary-600" : "bg-gray-300 dark:bg-gray-600"
                   )}
                 />
               ))}
             </div>
 
-            <Button
-              onClick={handleNext}
-              disabled={!canProceed()}
-              className="flex items-center space-x-2"
-            >
-              <span>{currentStep === steps.length - 1 ? 'Start Calculating' : 'Next'}</span>
-              <ChevronRight className="w-4 h-4" />
-            </Button>
+            {currentStep === steps.length - 1 ? (
+              <Button
+                onClick={completeSetup}
+                disabled={!canProceed()}
+                className="flex items-center space-x-2 bg-green-600 hover:bg-green-700"
+              >
+                <span>Start Calculating</span>
+                <Zap className="w-4 h-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={nextStep}
+                disabled={!canProceed()}
+                className="flex items-center space-x-2"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            )}
           </div>
         </div>
       </div>
