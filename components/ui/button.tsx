@@ -8,14 +8,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary-600 text-primary-foreground hover:bg-primary-700 shadow-md hover:shadow-lg',
+        default: 'bg-gradient-infinex text-white hover:shadow-lg hover:shadow-primary-500/25 transform hover:scale-105 transition-all duration-200',
         destructive: 'bg-error-600 text-error-foreground hover:bg-error-700 shadow-md hover:shadow-lg',
-        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm',
-        secondary: 'bg-secondary-600 text-secondary-foreground hover:bg-secondary-700 shadow-md hover:shadow-lg',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
-        glass: 'glass text-foreground hover:bg-white/20 shadow-glass',
-        gradient: 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:from-primary-700 hover:to-secondary-700 shadow-md hover:shadow-lg',
+        outline: 'border-2 border-primary-500 bg-transparent text-primary-500 hover:bg-primary-500 hover:text-white transition-all duration-200',
+        secondary: 'bg-gradient-cyber text-white hover:shadow-lg hover:shadow-accent-500/25 transform hover:scale-105 transition-all duration-200',
+        ghost: 'hover:bg-primary-50 hover:text-primary-600 dark:hover:bg-primary-950 dark:hover:text-primary-400 transition-all duration-200',
+        link: 'text-primary-600 underline-offset-4 hover:underline',
+        glass: 'glass backdrop-blur-xl text-foreground hover:bg-primary-500/20 border border-primary-200/20 dark:border-primary-800/20',
+        gradient: 'bg-gradient-mesh text-white hover:shadow-lg hover:shadow-primary-500/25 transform hover:scale-105 transition-all duration-200',
         neumorphism: 'neumorphism text-foreground hover:shadow-neumorphism-light dark:hover:shadow-neumorphism-dark',
       },
       size: {

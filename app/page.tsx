@@ -34,25 +34,25 @@ const features = [
     icon: Calculator,
     title: '35+ Business Types',
     description: 'From startups to enterprises, SaaS to e-commerce - comprehensive scenarios for every business model.',
-    color: 'bg-blue-500'
+    color: 'bg-gradient-infinex'
   },
   {
     icon: Globe,
     title: '25+ Countries',
     description: 'Real-time 2025 tax rates and economic data for accurate international calculations.',
-    color: 'bg-green-500'
+    color: 'bg-gradient-cyber'
   },
   {
     icon: TrendingUp,
     title: 'Advanced Analytics',
     description: 'NPV, IRR, payback period, and comprehensive financial projections with growth modeling.',
-    color: 'bg-purple-500'
+    color: 'bg-gradient-infinex'
   },
   {
     icon: Shield,
     title: 'GDPR Compliant',
     description: 'Privacy-first design with secure data handling and transparent analytics.',
-    color: 'bg-orange-500'
+    color: 'bg-gradient-cyber'
   },
   {
     icon: Download,
@@ -123,13 +123,14 @@ const testimonials = [
 export default function HomePage() {
   return (
     <div className="relative min-h-screen">
-      {/* Background Elements */}
+      {/* Infinex-style Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950 dark:via-indigo-950 dark:to-purple-950" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float floating-delayed" />
-        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" />
+        <div className="absolute inset-0 bg-gradient-hero" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float floating-delayed" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-primary-400 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-float" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
       </div>
 
       <Header />
@@ -145,16 +146,14 @@ export default function HomePage() {
               className="text-center space-y-8"
             >
               <motion.div variants={fadeInUp} className="space-y-4">
-                <Badge variant="secondary" className="glass-strong text-primary-700 dark:text-primary-300 px-4 py-2">
+                <Badge variant="secondary" className="glass border-primary-200 bg-primary-50/50 text-primary-700 dark:border-primary-800 dark:bg-primary-950/50 dark:text-primary-300 px-6 py-3">
                   <Star className="w-4 h-4 mr-2" />
-                  2025's Most Advanced ROI Calculator
+                  Next-Gen ROI Analytics Platform
                 </Badge>
                 
-                <h1 className="text-display font-display text-balance">
-                  Calculate ROI for{' '}
-                  <span className="text-gradient-vibrant">35+ Business Types</span>
-                  {' '}Across{' '}
-                  <span className="text-gradient">25+ Countries</span>
+                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-balance bg-gradient-infinex bg-clip-text text-transparent">
+                  Professional ROI{' '}
+                  <span className="block">Calculator</span>
                 </h1>
                 
                 <p className="text-body text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-pretty">

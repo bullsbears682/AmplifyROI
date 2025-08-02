@@ -2,25 +2,25 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Custom CSS Variables */
+/* Infinex-Inspired CSS Variables */
 :root {
-  --color-primary: 14 165 233;
+  --color-primary: 123 131 255;
   --color-primary-foreground: 255 255 255;
-  --color-secondary: 217 70 239;
+  --color-secondary: 20 184 166;
   --color-secondary-foreground: 255 255 255;
-  --color-background: 255 255 255;
-  --color-foreground: 31 41 55;
-  --color-muted: 248 250 252;
+  --color-background: 248 250 252;
+  --color-foreground: 15 23 42;
+  --color-muted: 241 245 249;
   --color-muted-foreground: 100 116 139;
   --color-border: 226 232 240;
-  --color-input: 226 232 240;
-  --color-ring: 14 165 233;
+  --color-input: 255 255 255;
+  --color-ring: 123 131 255;
   --color-destructive: 239 68 68;
   --color-destructive-foreground: 255 255 255;
-  --radius: 0.5rem;
-  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  --gradient-mesh: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-vibrant: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+  --radius: 0.75rem;
+  --shadow-glass: 0 8px 32px 0 rgba(123, 131, 255, 0.15);
+  --gradient-infinex: linear-gradient(135deg, #7b83ff 0%, #6b5fff 50%, #5b45ec 100%);
+  --gradient-cyber: linear-gradient(135deg, #14b8a6 0%, #2dd4bf 50%, #5eead4 100%);
 }
 
 .dark {
@@ -30,7 +30,8 @@
   --color-muted-foreground: 148 163 184;
   --color-border: 30 41 59;
   --color-input: 30 41 59;
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-glass: 0 8px 32px 0 rgba(123, 131, 255, 0.25);
+  --gradient-infinex: linear-gradient(135deg, #251e5e 0%, #3f32a0 50%, #4b38c8 100%);
 }
 
 /* Base Styles */

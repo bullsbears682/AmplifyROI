@@ -6,14 +6,14 @@ const cardVariants = cva(
   'rounded-xl border transition-all duration-300',
   {
     variants: {
-      variant: {
-        default: 'bg-card text-card-foreground border-border shadow-sm hover:shadow-md',
-        glass: 'glass border-white/20 shadow-glass hover:shadow-xl backdrop-blur-xl',
-        neumorphism: 'neumorphism border-0 shadow-neumorphism-light dark:shadow-neumorphism-dark hover:shadow-elevated',
-        elevated: 'bg-card text-card-foreground border-border shadow-lg hover:shadow-xl',
-        outline: 'border-2 border-border bg-transparent hover:bg-accent/5',
-        gradient: 'bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-950 dark:to-secondary-950 border-primary-200 dark:border-primary-800',
-      },
+          variant: {
+      default: 'bg-card text-card-foreground border-border shadow-sm hover:shadow-lg hover:shadow-primary-500/10 transition-all duration-300',
+      glass: 'glass border-primary-200/20 dark:border-primary-800/20 shadow-glass hover:shadow-xl backdrop-blur-xl hover:bg-primary-500/5',
+      neumorphism: 'neumorphism border-0 shadow-neumorphism-light dark:shadow-neumorphism-dark hover:shadow-elevated',
+      elevated: 'bg-card text-card-foreground border-border shadow-lg hover:shadow-xl hover:shadow-primary-500/20 transform hover:scale-[1.02] transition-all duration-300',
+      outline: 'border-2 border-primary-200 dark:border-primary-800 bg-transparent hover:bg-primary-50/50 dark:hover:bg-primary-950/50 transition-all duration-300',
+      gradient: 'bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-950 dark:to-accent-950 border-primary-200 dark:border-primary-800',
+    },
       size: {
         default: 'p-6',
         sm: 'p-4',
