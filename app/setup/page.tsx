@@ -284,12 +284,12 @@ export default function SetupPage() {
   const [isComplete, setIsComplete] = useState(false)
 
   const router = useRouter()
-  const { setWizardStep, setSelectedCountry: setContextCountry, setSelectedBusinessType: setContextBusinessType, setSelectedScenario: setContextScenario } = useCalculator()
+  const { goToStep, selectCountry, selectBusinessType, selectScenario } = useCalculator()
   const { trackEvent } = useAnalyticsContext()
 
   useEffect(() => {
-    setWizardStep(currentStep)
-  }, [currentStep, setWizardStep])
+    goToStep(currentStep)
+  }, [currentStep, goToStep])
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -306,19 +306,19 @@ export default function SetupPage() {
 
   const handleCountrySelect = (countryCode: string) => {
     setSelectedCountry(countryCode)
-    setContextCountry(countryCode)
+    // TODO: Update context with full country object
     trackEvent('country_select', { country: countryCode })
   }
 
   const handleBusinessTypeSelect = (businessTypeId: string) => {
     setSelectedBusinessType(businessTypeId)
-    setContextBusinessType(businessTypeId)
+    // TODO: Update context with full business type object
     trackEvent('business_type_select', { businessType: businessTypeId })
   }
 
   const handleScenarioSelect = (scenarioId: string) => {
     setSelectedScenario(scenarioId)
-    setContextScenario(scenarioId)
+    // TODO: Update context with full scenario object
     trackEvent('scenario_select', { scenario: scenarioId })
   }
 
@@ -354,7 +354,7 @@ export default function SetupPage() {
     type.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const availableScenarios = selectedBusinessType ? scenarios[selectedBusinessType] || [] : []
+  const availableScenarios = selectedBusinessType ? (scenarios as any)[selectedBusinessType] || [] : []
 
   if (isComplete) {
     return (
@@ -631,7 +631,7 @@ export default function SetupPage() {
 
                   {/* Scenarios Grid */}
                   <div className="grid grid-cols-1 gap-6">
-                    {availableScenarios.map((scenario) => (
+                    {availableScenarios.map((scenario: any) => (
                       <Card
                         key={scenario.id}
                         className={cn(

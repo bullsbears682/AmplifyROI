@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
 import { Button } from './button'
@@ -28,11 +28,11 @@ export function TestimonialCarousel({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(autoPlay)
 
-  const nextTestimonial = () => {
+  const nextTestimonial = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
     )
-  }
+  }, [testimonials.length])
 
   const prevTestimonial = () => {
     setCurrentIndex((prevIndex) => 
@@ -50,7 +50,7 @@ export function TestimonialCarousel({
 
     const timer = setInterval(nextTestimonial, interval)
     return () => clearInterval(timer)
-  }, [isAutoPlaying, interval])
+  }, [isAutoPlaying, interval, nextTestimonial])
 
   // Pause auto-play on hover
   const handleMouseEnter = () => setIsAutoPlaying(false)

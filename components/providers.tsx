@@ -20,7 +20,7 @@ export function Providers({ children }: ProvidersProps) {
         defaultOptions: {
           queries: {
             staleTime: 60 * 1000, // 1 minute
-            cacheTime: 10 * 60 * 1000, // 10 minutes
+            gcTime: 10 * 60 * 1000, // 10 minutes
             retry: (failureCount, error: any) => {
               // Don't retry on 4xx errors
               if (error?.response?.status >= 400 && error?.response?.status < 500) {

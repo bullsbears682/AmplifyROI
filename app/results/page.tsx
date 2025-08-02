@@ -167,7 +167,8 @@ export default function ResultsPage() {
   const [expandedInsight, setExpandedInsight] = useState<string | null>(null)
   
   const router = useRouter()
-  const { selectedCountry, selectedBusinessType, selectedScenario, calculationInputs } = useCalculator()
+  const { state } = useCalculator()
+  const { selectedCountry, selectedBusinessType, selectedScenario, calculationInputs } = state
   const { trackEvent, trackConversion } = useAnalyticsContext()
 
   // Mock results (in real app, this would be calculated by the backend)
@@ -259,7 +260,7 @@ export default function ResultsPage() {
         return {
           ...proj,
           cumulativeProfit,
-          roi: (cumulativeProfit / calculationInputs.initialInvestment) * 100
+          roi: calculationInputs ? (cumulativeProfit / calculationInputs.initial_investment) * 100 : 0
         }
       })
 
@@ -367,11 +368,15 @@ export default function ResultsPage() {
 
             {/* Configuration Summary */}
             <div className="flex flex-wrap items-center gap-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <Badge variant="secondary">🌍 {selectedCountry}</Badge>
-              <Badge variant="secondary">🏢 {selectedBusinessType}</Badge>
-              <Badge variant="secondary">📊 {selectedScenario}</Badge>
-              <Badge variant="secondary">💰 {formatCurrency(calculationInputs.initialInvestment, 'USD')} investment</Badge>
-              <Badge variant="secondary">📅 {calculationInputs.timeframe} months</Badge>
+                              <Badge variant="secondary">🌍 {selectedCountry?.name}</Badge>
+                <Badge variant="secondary">🏢 {selectedBusinessType?.name}</Badge>
+                <Badge variant="secondary">📊 {selectedScenario?.name}</Badge>
+                              {calculationInputs && (
+                  <>
+                    <Badge variant="secondary">💰 {formatCurrency(calculationInputs.initial_investment, 'USD')} investment</Badge>
+                    <Badge variant="secondary">📅 {calculationInputs.timeframe_months} months</Badge>
+                  </>
+                )}
             </div>
           </div>
 

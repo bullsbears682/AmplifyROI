@@ -227,7 +227,8 @@ export default function CalculatorPage() {
   const [whatIfResults, setWhatIfResults] = useState<any[]>([])
   
   const router = useRouter()
-  const { selectedCountry, selectedBusinessType, selectedScenario, setCalculationInputs } = useCalculator()
+  const { state, updateInputs } = useCalculator()
+  const { selectedCountry, selectedBusinessType, selectedScenario } = state
   const { trackEvent, trackFormEvent } = useAnalyticsContext()
 
   const {
@@ -278,8 +279,28 @@ export default function CalculatorPage() {
     setIsCalculating(true)
     
     try {
+      // Transform form data to match context interface
+      const calculationInputs = {
+        country: selectedCountry?.code || '',
+        business_type: selectedBusinessType?.id || '',
+        scenario: selectedScenario?.id || '',
+        monthly_revenue: data.initialRevenue,
+        initial_investment: data.initialInvestment,
+        operating_expenses: data.monthlyOperatingCosts,
+        marketing_spend: data.marketingBudget || 0,
+        gross_margin: data.grossMargin,
+        customer_acquisition_cost: data.customerAcquisitionCost,
+        average_order_value: data.averageOrderValue,
+        customer_lifetime_value: data.customerLifetimeValue,
+        churn_rate: data.churnRate,
+        timeframe_months: data.timeframe,
+        fulfillment_costs: 0, // Default value
+        payment_processing_rate: 2.9, // Default value for payment processing
+        employee_costs: data.employeeCosts
+      }
+      
       // Set inputs in context
-      setCalculationInputs(data)
+      updateInputs(calculationInputs)
       
       // Track calculation
       trackFormEvent('calculator_form', 'complete', {
@@ -413,9 +434,9 @@ export default function CalculatorPage() {
 
             {/* Selected Configuration */}
             <div className="flex flex-wrap items-center gap-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <Badge variant="secondary">🌍 {selectedCountry}</Badge>
-              <Badge variant="secondary">🏢 {selectedBusinessType}</Badge>
-              <Badge variant="secondary">📊 {selectedScenario}</Badge>
+              <Badge variant="secondary">🌍 {selectedCountry?.name}</Badge>
+              <Badge variant="secondary">🏢 {selectedBusinessType?.name}</Badge>
+              <Badge variant="secondary">📊 {selectedScenario?.name}</Badge>
             </div>
           </div>
 

@@ -25,7 +25,10 @@ export function StatsCounter({
   const ref = React.useRef(null)
   const isInView = useInView(ref, { once: true })
   const motionValue = useMotionValue(0)
-  const springValue = useSpring(motionValue, { duration: duration * 1000, delay: delay * 1000 })
+  const springValue = useSpring(motionValue, { 
+    damping: 30,
+    stiffness: 100
+  })
   const [displayValue, setDisplayValue] = useState(0)
 
   useEffect(() => {
