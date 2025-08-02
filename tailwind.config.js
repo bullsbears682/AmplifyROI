@@ -141,12 +141,13 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-mesh': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        'gradient-vibrant': 'linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%)',
-        'gradient-aurora': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #d299c2 100%)',
-        'gradient-sunset': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-        'gradient-ocean': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'gradient-infinex': 'linear-gradient(135deg, #7b83ff 0%, #6b5fff 50%, #5b45ec 100%)',
+        'gradient-infinex-dark': 'linear-gradient(135deg, #251e5e 0%, #3f32a0 50%, #4b38c8 100%)',
+        'gradient-cyber': 'linear-gradient(135deg, #14b8a6 0%, #2dd4bf 50%, #5eead4 100%)',
+        'gradient-mesh': 'linear-gradient(135deg, #6b5fff 0%, #14b8a6 100%)',
+        'gradient-hero': 'radial-gradient(ellipse at top, #7b83ff 0%, #1e293b 50%, #0f172a 100%)',
         'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+        'glass-dark': 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%)',
       },
       // Custom animations
       animation: {
